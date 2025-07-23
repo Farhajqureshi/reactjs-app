@@ -1,4 +1,4 @@
-import DetailsCardComponent from "./components/DetailsCardComponent";
+import DetailsCardComponent from "./DetailsCardComponent";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
