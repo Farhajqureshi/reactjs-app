@@ -28,6 +28,19 @@ jobs:
 
       - name: Push Docker Image to Docker Hub
         run: docker push farhajqureshi81/reactjs-app:latest
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: 🛡️ Run Trivy FS Scan using Docker
+        run: |
+          echo "🔍 Trivy scanning started..."
+          docker run --rm -v ${{ github.workspace }}:/project aquasec/trivy fs --severity HIGH,CRITICAL /project > trivy-fs-report.txt || true
+
+      - name: 📤 Upload Trivy Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-fs-report
+          path: trivy-fs-report.txt
 
   deploy:
     needs: build
